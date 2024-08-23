@@ -27,13 +27,13 @@ The model consists of two parts. The first predicts antibody titres over time
 following initital dose(s) and subsequent booster doses. 
 
 $$
-titre(t) = titre_{dose} \left( \rho_{dose} e^{-r_s (t - t_{dose})} + (1 - \rho_{dose}) e^{-r_l (t - t_{dose})} \right)
+titre(t) = titre_{dose} \left( \rho_{dose} e^{-r_{dose}^s (t - t_{dose})} + (1 - \rho_{dose}) e^{-r_{dose}^l (t - t_{dose})} \right)
 $$
 
 Where subscript $dose$ indexes for the primary series dose(s) or  subsequent booster doses,
 $titre$ is the maximum titre on receipt of a dose or booster, $rho$ the proportion
-of the response that is short-lived and $r_s = \frac{\log_e(2)}{d_s}$ and 
-$r_l = \frac{\log_e(2)}{d_l}$ where $d_s$ and $d_l$ are the half-lives of the 
+of the response that is short-lived and $r^s = \frac{\log_e(2)}{d^s}$ and 
+$r^l = \frac{\log_e(2)}{d^l}$ where $d^s$ and $d^l$ are the half-lives of the 
 short and long lived components of the antibody response respectively. 
 
 The second translates antibody titre to vaccine efficacy using a parameterised
