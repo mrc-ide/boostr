@@ -11,7 +11,7 @@ coverage](https://codecov.io/gh/mrc-ide/boostr/graph/badge.svg)](https://app.cod
 <!-- badges: end -->
 
 This is a generic implementation of a combined vaccine and vaccine
-efficacy modelling frame work first proposed in [White et al
+efficacy modelling framework first proposed in [White et al
 (2015)](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(15)00239-X/fulltext).
 Please cite this work if you use this vaccine model.
 
@@ -34,7 +34,7 @@ The second translates antibody titre to vaccine efficacy using a
 parameterised dose response curve.
 
 $$
-V(t) = V_{max} \left( 1 - \frac{1}{1 + \left( \frac{CS(t)}{\beta} \right)^\alpha } \right)
+V(t) = V_{max} \left( 1 - \frac{1}{1 + \left( \frac{titre(t)}{\beta} \right)^\alpha } \right)
 $$
 
 Where $V_{max}$ is the maximum vaccine efficacy, $alpha$ the shape
