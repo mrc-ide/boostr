@@ -13,6 +13,7 @@ coverage](https://codecov.io/gh/mrc-ide/boostr/graph/badge.svg)](https://app.cod
 This is a generic implementation of a combined vaccine and vaccine
 efficacy modelling frame work first proposed in [White et al
 (2015)](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(15)00239-X/fulltext).
+Please cite this work if you use this vaccine model.
 
 The model consists of two parts. The first predicts antibody titres over
 time following initital dose(s) and subsequent booster doses.
