@@ -20,18 +20,27 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/mrc-ide/boostr/graph/badge.svg)](https://app.codecov.io/gh/mrc-ide/boostr)
 <!-- badges: end -->
 
-The goal of boostr is to ...
+This is a generic implementation of a combined vaccine and vaccine efficacy
+modelling frame work first proposed in [White et al (2015)](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(15)00239-X/fulltext).
 
-## Installation
+The model consists of two parts. The first predicts antibody titres over time
+following initital dose(s) and subsequent booster doses. 
 
-You can install the development version of boostr from [GitHub](https://github.com/) with:
+$$
+titre(t) = titre_{dose} \left( \rho_{dose} e^{-r_s (t - t_{dose})} + (1 - \rho_{dose}) e^{-r_l (t - t_{dose})} \right)
+$$
 
-``` r
-# install.packages("pak")
-pak::pak("mrc-ide/boostr")
-```
+Where subscript $dose$ indexes for the primary series dose(s) or  subsequent booster doses,
+$titre$ is the maximum titre on receipt of a dose or booster, $rho$ the proportion
+of the response that is short-lived and $r_s = \frac{\log_e(2)}{d_s}$ and 
+$r_l = \frac{\log_e(2)}{d_l}$ where $d_s$ and $d_l$ are the half-lives of the 
+short and long lived components of the antibody response respectively. 
 
-## Example
+The second translates antibody titre to vaccine efficacy using a parameterised
+dose response curve. 
 
-This is a basic example which shows you how to solve a common problem:
-
+$$
+V(t) = V_{max} \left( 1 - \frac{1}{1 + \left( \frac{CS(t)}{\beta} \right)^\alpha } \right)
+$$
+Where $V_{max}$ is the maximum vaccine efficacy, $alpha$ the shape parameter
+and $beta$ the scale parameter
