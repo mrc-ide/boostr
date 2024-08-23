@@ -15,4 +15,8 @@ Useful links:
 }
 
 }
+\author{
+\strong{Maintainer}: Pete Winskill \email{p.winskill@imperial.ac.uk} (\href{https://orcid.org/0000-0003-3001-4959}{ORCID})
+
+}
 \keyword{internal}

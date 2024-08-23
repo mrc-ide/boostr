@@ -3,3 +3,7 @@
 ab_cpp <- function(t, td, cs, rho, ds, dl) {
   .Call(`_boostr_ab_cpp`, t, td, cs, rho, ds, dl)
 }
+
+efficacy_cpp <- function(titre, max_efficacy, alpha, beta) {
+  .Call(`_boostr_efficacy_cpp`, titre, max_efficacy, alpha, beta)
+}

@@ -35,7 +35,7 @@ test_that("antibody models work", {
 })
 
 
-test_that("antibody model wrapper work", {
+test_that("antibody model wrapper works", {
   # Time of doses (assuming fist is dose 3 of primary series)
   td <- c(1, 365, 365 * 2)
   # Peaks following primary series or boost
@@ -49,23 +49,23 @@ test_that("antibody model wrapper work", {
   t <- 5 * 365
 
   # Single dose
-  abr <- ab(t, td[1], cs[1], rho[1], ds[1], dl[1])
-  abc <- ab(t, td[1], cs[1], rho[1], ds[1], dl[1], cpp = TRUE)
+  abr <- ab(t, td[1], cs[1], rho[1], ds[1], dl[1], cpp = FALSE)
+  abc <- ab(t, td[1], cs[1], rho[1], ds[1], dl[1])
   expect_identical(abc, abc)
   expect_true(all(abr > 0))
   expect_true(all(abc > 0))
 
   # Multiple doses
-  abr <- ab(t, td, cs, rho, ds, dl)
-  abc <- ab(t, td, cs, rho, ds, dl, cpp = TRUE)
+  abr <- ab(t, td, cs, rho, ds, dl, cpp = FALSE)
+  abc <- ab(t, td, cs, rho, ds, dl)
   expect_identical(abc, abc)
   expect_true(all(abr > 0))
   expect_true(all(abc > 0))
 
   # Drop in titre
   cs[2] <- 1
-  abr <- ab(t, td, cs, rho, ds, dl)
-  abc <- ab(t, td, cs, rho, ds, dl, cpp = TRUE)
+  abr <- ab(t, td, cs, rho, ds, dl, cpp = FALSE)
+  abc <- ab(t, td, cs, rho, ds, dl)
   expect_identical(abc, abc)
   expect_true(all(abr > 0))
   expect_true(all(abc > 0))
