@@ -45,3 +45,11 @@ $$
 
 Where $V_{max}$ is the maximum vaccine efficacy, $alpha$ the shape parameter
 and $beta$ the scale parameter
+
+### Installation
+
+You can install `boostr` from github with:
+
+``` r
+pak::pkg_install("mrc-ide/boostr")
+```
