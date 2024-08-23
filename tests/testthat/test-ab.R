@@ -2,33 +2,33 @@ test_that("antibody models work", {
   # Time of doses (assuming fist is dose 3 of primary series)
   td <- c(1, 365, 365 * 2)
   # Peaks following primary series or boost
-  cs <- c(100, 80, 90)
+  init_titres <- c(100, 80, 90)
   # Proportion short-lived
-  rho <- c(1, 0.5, 0.6)
+  prop_short <- c(1, 0.5, 0.6)
   # Decay short
-  ds <- c(30, 30, 30)
+  dur_short <- c(60, 60, 60)
   # Decay long
-  dl <- c(300, 300, 300)
+  dur_long <- c(300, 300, 300)
   t <- 5 * 365
 
   # Single dose
-  abr <- ab_r(1:t, td[1], cs[1], rho[1], ds[1], dl[1])
-  abc <- ab_cpp(1:t, td[1], cs[1], rho[1], ds[1], dl[1])
+  abr <- ab_r(1:t, td[1], init_titres[1], prop_short[1], dur_short[1], dur_long[1])
+  abc <- ab_cpp(1:t, td[1], init_titres[1], prop_short[1], dur_short[1], dur_long[1])
   expect_identical(abc, abc)
   expect_true(all(abr > 0))
   expect_true(all(abc > 0))
 
   # Multiple doses
-  abr <- ab_r(1:t, td, cs, rho, ds, dl)
-  abc <- ab_cpp(1:t, td, cs, rho, ds, dl)
+  abr <- ab_r(1:t, td, init_titres, prop_short, dur_short, dur_long)
+  abc <- ab_cpp(1:t, td, init_titres, prop_short, dur_short, dur_long)
   expect_identical(abc, abc)
   expect_true(all(abr > 0))
   expect_true(all(abc > 0))
 
   # Drop in titre
-  cs[2] <- 1
-  abr <- ab_r(1:t, td, cs, rho, ds, dl)
-  abc <- ab_cpp(1:t, td, cs, rho, ds, dl)
+  init_titres[2] <- 1
+  abr <- ab_r(1:t, td, init_titres, prop_short, dur_short, dur_long)
+  abc <- ab_cpp(1:t, td, init_titres, prop_short, dur_short, dur_long)
   expect_identical(abc, abc)
   expect_true(all(abr > 0))
   expect_true(all(abc > 0))
@@ -39,75 +39,75 @@ test_that("antibody model wrapper works", {
   # Time of doses (assuming fist is dose 3 of primary series)
   td <- c(1, 365, 365 * 2)
   # Peaks following primary series or boost
-  cs <- c(100, 80, 90)
+  init_titres <- c(100, 80, 90)
   # Proportion short-lived
-  rho <- c(1, 0.5, 0.6)
+  prop_short <- c(1, 0.5, 0.6)
   # Decay short
-  ds <- c(30, 30, 30)
+  dur_short <- c(60, 60, 60)
   # Decay long
-  dl <- c(300, 300, 300)
+  dur_long <- c(300, 300, 300)
   t <- 5 * 365
 
   # Single dose
-  abr <- ab(t, td[1], cs[1], rho[1], ds[1], dl[1], cpp = FALSE)
-  abc <- ab(t, td[1], cs[1], rho[1], ds[1], dl[1])
+  abr <- ab(t, td[1], init_titres[1], prop_short[1], dur_short[1], dur_long[1], cpp = FALSE)
+  abc <- ab(t, td[1], init_titres[1], prop_short[1], dur_short[1], dur_long[1])
   expect_identical(abc, abc)
   expect_true(all(abr > 0))
   expect_true(all(abc > 0))
 
   # Multiple doses
-  abr <- ab(t, td, cs, rho, ds, dl, cpp = FALSE)
-  abc <- ab(t, td, cs, rho, ds, dl)
+  abr <- ab(t, td, init_titres, prop_short, dur_short, dur_long, cpp = FALSE)
+  abc <- ab(t, td, init_titres, prop_short, dur_short, dur_long)
   expect_identical(abc, abc)
   expect_true(all(abr > 0))
   expect_true(all(abc > 0))
 
   # Drop in titre
-  cs[2] <- 1
-  abr <- ab(t, td, cs, rho, ds, dl, cpp = FALSE)
-  abc <- ab(t, td, cs, rho, ds, dl)
+  init_titres[2] <- 1
+  abr <- ab(t, td, init_titres, prop_short, dur_short, dur_long, cpp = FALSE)
+  abc <- ab(t, td, init_titres, prop_short, dur_short, dur_long)
   expect_identical(abc, abc)
   expect_true(all(abr > 0))
   expect_true(all(abc > 0))
 
   # Errors correctly
   expect_error(
-    ab(-1, td, cs, rho, ds, dl),
+    ab(-1, td, init_titres, prop_short, dur_short, dur_long),
     "timesteps must be positive"
   )
   td_wrong <- td
   td_wrong[2] <- -1
   expect_error(
-    ab(t, td_wrong, cs, rho, ds, dl),
+    ab(t, td_wrong, init_titres, prop_short, dur_short, dur_long),
     "dose_timesteps must be positive and montonically increasing"
   )
   td_wrong <- td
   td_wrong[2] <- 1000
   expect_error(
-    ab(t, td_wrong, cs, rho, ds, dl),
+    ab(t, td_wrong, init_titres, prop_short, dur_short, dur_long),
     "dose_timesteps must be positive and montonically increasing"
   )
-  init_wrong <- cs
+  init_wrong <- init_titres
   init_wrong[2] <- -1
   expect_error(
-    ab(t, td, init_wrong, rho, ds, dl),
+    ab(t, td, init_wrong, prop_short, dur_short, dur_long),
     "All init_titres must be > 0"
   )
-  prop_wrong <- rho
+  prop_wrong <- prop_short
   prop_wrong[2] <- -1
   expect_error(
-    ab(t, td, cs, prop_wrong, ds, dl),
+    ab(t, td, init_titres, prop_wrong, dur_short, dur_long),
     "prop_short must be between 0 and 1"
   )
   prop_wrong[2] <- 2
   expect_error(
-    ab(t, td, cs, prop_wrong, ds, dl),
+    ab(t, td, init_titres, prop_wrong, dur_short, dur_long),
     "prop_short must be between 0 and 1"
   )
-  dur_wrong <- ds
+  dur_wrong <- dur_short
   dur_wrong[2] <- 1000
   expect_error(
-    ab(t, td, cs, rho, dur_wrong, dl),
+    ab(t, td, init_titres, prop_short, dur_wrong, dur_long),
     "dur_short should be < dur_long"
   )
 })
