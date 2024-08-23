@@ -34,5 +34,7 @@ parameterised dose response curve.
 
 $$
 V(t) = V_{max} \left( 1 - \frac{1}{1 + \left( \frac{CS(t)}{\beta} \right)^\alpha } \right)
-$$ Where $V_{max}$ is the maximum vaccine efficacy, $alpha$ the shape
+$$
+
+Where $V_{max}$ is the maximum vaccine efficacy, $alpha$ the shape
 parameter and $beta$ the scale parameter
