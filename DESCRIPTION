@@ -11,3 +11,7 @@ Encoding: UTF-8
 LazyData: true
 URL: https://mrc-ide.github.io/boostr/
 RoxygenNote: 7.3.2
+LinkingTo: cpp11
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
