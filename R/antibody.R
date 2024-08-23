@@ -38,11 +38,11 @@ ab <- function(timesteps, dose_timesteps, init_titres, prop_short, dur_short, du
   return(titres)
 }
 
-ab_r <- function(t, td, cs, rho, ds, dl){
-  t_index <- findInterval(t, td)
-  t_rel <- t - td[t_index]
-  rs <- log(2) / ds
-  rl <- log(2) / dl
+ab_r <- function(t, dose_timesteps, init_titres, prop_short, dur_short, dur_long){
+  t_index <- findInterval(t, dose_timesteps)
+  t_rel <- t - dose_timesteps[t_index]
+  rs <- log(2) / dur_short
+  rl <- log(2) / dur_long
 
   ab <- rep(NA, length(t))
   for(i in t){
@@ -50,13 +50,13 @@ ab_r <- function(t, td, cs, rho, ds, dl){
     t_rel_i <- t_rel[i]
     # Check boost doesn't cause downwards drop in ab titre:
     if(i > 1){
-      if(i == td[t_index_i]){
-        if(ab[i - 1] > cs[t_index_i]){
-          cs[t_index_i] <- ab[i - 1]
+      if(i == dose_timesteps[t_index_i]){
+        if(ab[i - 1] > init_titres[t_index_i]){
+          init_titres[t_index_i] <- ab[i - 1]
         }
       }
     }
-    ab[i] <- cs[t_index_i] * ((rho[t_index_i] * exp(-rs[t_index_i] * t_rel_i)) + ((1 - rho[t_index_i]) *  exp(-rl[t_index_i] * t_rel_i)))
+    ab[i] <- init_titres[t_index_i] * ((prop_short[t_index_i] * exp(-rs[t_index_i] * t_rel_i)) + ((1 - prop_short[t_index_i]) *  exp(-rl[t_index_i] * t_rel_i)))
   }
 
   return(ab)

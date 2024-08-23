@@ -6,10 +6,10 @@
 #include <R_ext/Visibility.h>
 
 // antibody.cpp
-doubles ab_cpp(integers t, doubles td, doubles cs, doubles rho, doubles ds, doubles dl);
-extern "C" SEXP _boostr_ab_cpp(SEXP t, SEXP td, SEXP cs, SEXP rho, SEXP ds, SEXP dl) {
+doubles ab_cpp(integers t, doubles dose_timesteps, doubles init_titres, doubles prop_short, doubles dur_short, doubles dur_long);
+extern "C" SEXP _boostr_ab_cpp(SEXP t, SEXP dose_timesteps, SEXP init_titres, SEXP prop_short, SEXP dur_short, SEXP dur_long) {
   BEGIN_CPP11
-    return cpp11::as_sexp(ab_cpp(cpp11::as_cpp<cpp11::decay_t<integers>>(t), cpp11::as_cpp<cpp11::decay_t<doubles>>(td), cpp11::as_cpp<cpp11::decay_t<doubles>>(cs), cpp11::as_cpp<cpp11::decay_t<doubles>>(rho), cpp11::as_cpp<cpp11::decay_t<doubles>>(ds), cpp11::as_cpp<cpp11::decay_t<doubles>>(dl)));
+    return cpp11::as_sexp(ab_cpp(cpp11::as_cpp<cpp11::decay_t<integers>>(t), cpp11::as_cpp<cpp11::decay_t<doubles>>(dose_timesteps), cpp11::as_cpp<cpp11::decay_t<doubles>>(init_titres), cpp11::as_cpp<cpp11::decay_t<doubles>>(prop_short), cpp11::as_cpp<cpp11::decay_t<doubles>>(dur_short), cpp11::as_cpp<cpp11::decay_t<doubles>>(dur_long)));
   END_CPP11
 }
 // efficacy.cpp
