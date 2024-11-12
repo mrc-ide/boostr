@@ -21,7 +21,7 @@ test_that("antibody models work", {
   # Multiple doses
   abr <- ab_r(1:t, td, init_titres, prop_short, dur_short, dur_long)
   abc <- ab_cpp(1:t, td, init_titres, prop_short, dur_short, dur_long)
-  expect_identical(abc, abc)
+  expect_identical(abr, abc)
   expect_true(all(abr > 0))
   expect_true(all(abc > 0))
 
@@ -49,24 +49,25 @@ test_that("antibody model wrapper works", {
   t <- 5 * 365
 
   # Single dose
-  abr <- ab(t, td[1], init_titres[1], prop_short[1], dur_short[1], dur_long[1], cpp = FALSE)
-  abc <- ab(t, td[1], init_titres[1], prop_short[1], dur_short[1], dur_long[1])
-  expect_identical(abc, abc)
+  abr <- ab(t, td[1], init_titres[1], prop_short[1], dur_short[1], dur_long[1], type = "r")
+  abc <- ab(t, td[1], init_titres[1], prop_short[1], dur_short[1], dur_long[1], type = "odin")
+  expect_equal(abr, abc)
   expect_true(all(abr > 0))
   expect_true(all(abc > 0))
 
   # Multiple doses
-  abr <- ab(t, td, init_titres, prop_short, dur_short, dur_long, cpp = FALSE)
-  abc <- ab(t, td, init_titres, prop_short, dur_short, dur_long)
-  expect_identical(abc, abc)
+  abr <- ab(t, td, init_titres, prop_short, dur_short, dur_long, type = "r")
+  abc <- ab(t, td, init_titres, prop_short, dur_short, dur_long, type = "odin")
+  expect_equal(abr, abc)
   expect_true(all(abr > 0))
   expect_true(all(abc > 0))
 
   # Drop in titre
-  init_titres[2] <- 1
-  abr <- ab(t, td, init_titres, prop_short, dur_short, dur_long, cpp = FALSE)
-  abc <- ab(t, td, init_titres, prop_short, dur_short, dur_long)
-  expect_identical(abc, abc)
+  td[2] <- 30
+  init_titres[2] <- 25
+  abr <- ab(t, td, init_titres, prop_short, dur_short, dur_long, type = "r")
+  abc <- ab(t, td, init_titres, prop_short, dur_short, dur_long, type = "odin")
+  expect_equal(abr, abc)
   expect_true(all(abr > 0))
   expect_true(all(abc > 0))
 

@@ -2,4 +2,5 @@
 
 export(ab)
 export(efficacy)
+importFrom(odin,odin)
 useDynLib(boostr, .registration = TRUE)

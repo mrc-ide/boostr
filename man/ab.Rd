@@ -4,15 +4,7 @@
 \alias{ab}
 \title{Estimate antibody titres}
 \usage{
-ab(
-  timesteps,
-  dose_timesteps,
-  init_titres,
-  prop_short,
-  dur_short,
-  dur_long,
-  cpp = TRUE
-)
+ab()
 }
 \arguments{
 \item{timesteps}{Number of timesteps to output titres for}

@@ -10,11 +10,11 @@
 #'
 #' @return Vector of antibody tires for 1:timesteps
 #' @export
-ab <- function(timesteps, dose_timesteps, init_titres, prop_short, dur_short, dur_long, cpp = TRUE){
+ab <- function(timesteps, dose_timesteps, init_titres, prop_short, dur_short, dur_long, type = "r"){
   if(timesteps < 1){
     stop("timesteps must be positive")
   }
-  if(!(all(dose_timesteps > 0) && all(diff(dose_timesteps) >= 0))){
+  if(!(all(dose_timesteps >= 0) && all(diff(dose_timesteps) >= 0))){
     stop("dose_timesteps must be positive and montonically increasing")
   }
   if(any(init_titres <= 0)){
@@ -29,10 +29,14 @@ ab <- function(timesteps, dose_timesteps, init_titres, prop_short, dur_short, du
 
   timesteps <- 1:timesteps
 
-  if(cpp){
-    titres <- ab_cpp(timesteps, dose_timesteps, init_titres, prop_short, dur_short, dur_long)
-  } else {
+  if(type == "r"){
     titres <- ab_r(timesteps, dose_timesteps, init_titres, prop_short, dur_short, dur_long)
+  }
+  if(type == "cpp"){
+    titres <- ab_cpp(timesteps, dose_timesteps, init_titres, prop_short, dur_short, dur_long)
+  }
+  if(type == "odin"){
+    titres <- ab_odin_wrapper(timesteps, dose_timesteps, init_titres, prop_short, dur_short, dur_long)
   }
 
   return(titres)
@@ -60,4 +64,21 @@ ab_r <- function(t, dose_timesteps, init_titres, prop_short, dur_short, dur_long
   }
 
   return(ab)
+}
+
+ab_odin_wrapper <- function(t, dose_timesteps, init_titres, prop_short, dur_short, dur_long){
+  rs <- log(2) / dur_short
+  rl <- log(2) / dur_long
+  pars <- list(
+    rs = rs,
+    rl = rl,
+    dose_timesteps = dose_timesteps - 1,
+    prop_short = prop_short,
+    init_titres = init_titres,
+    dose_index = 1:(length(dose_timesteps))
+  )
+  sys <- dust2::dust_system_create(ab_odin(), time = 0, pars, deterministic = TRUE)
+  dust2::dust_system_set_state_initial(sys)
+  y <- dust2::dust_system_simulate(sys, 1:(max(t)+1), index_state = 3)[,-1]
+  return(y)
 }
