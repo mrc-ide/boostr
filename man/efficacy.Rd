@@ -4,7 +4,7 @@
 \alias{efficacy}
 \title{Estimate vaccine efficacy}
 \usage{
-efficacy(titre, max_efficacy, alpha, beta, cpp = TRUE)
+efficacy(titre, max_efficacy, alpha, beta)
 }
 \arguments{
 \item{titre}{Vector of antibody titres}
@@ -14,8 +14,6 @@ efficacy(titre, max_efficacy, alpha, beta, cpp = TRUE)
 \item{alpha}{Shape parameter}
 
 \item{beta}{Scale parameter}
-
-\item{cpp}{Use cpp efficacy model}
 }
 \value{
 Vector of antibody efficacies for each titre

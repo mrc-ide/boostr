@@ -6,7 +6,7 @@
 #' @param prop_short Proportion of the response that is short lived for each dose period
 #' @param dur_short Duration of the short-lived response for each dose period
 #' @param dur_long Duration of the long-lived response for each dose period
-#' @param cpp Use cpp titre model
+#' @param type Can be "r" or "odin"
 #'
 #' @return Vector of antibody tires for 1:timesteps
 #' @export
@@ -31,9 +31,6 @@ ab <- function(timesteps, dose_timesteps, init_titres, prop_short, dur_short, du
 
   if(type == "r"){
     titres <- ab_r(timesteps, dose_timesteps, init_titres, prop_short, dur_short, dur_long)
-  }
-  if(type == "cpp"){
-    titres <- ab_cpp(timesteps, dose_timesteps, init_titres, prop_short, dur_short, dur_long)
   }
   if(type == "odin"){
     titres <- ab_odin_wrapper(timesteps, dose_timesteps, init_titres, prop_short, dur_short, dur_long)

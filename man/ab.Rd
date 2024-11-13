@@ -4,7 +4,15 @@
 \alias{ab}
 \title{Estimate antibody titres}
 \usage{
-ab()
+ab(
+  timesteps,
+  dose_timesteps,
+  init_titres,
+  prop_short,
+  dur_short,
+  dur_long,
+  type = "r"
+)
 }
 \arguments{
 \item{timesteps}{Number of timesteps to output titres for}
@@ -19,7 +27,7 @@ ab()
 
 \item{dur_long}{Duration of the long-lived response for each dose period}
 
-\item{cpp}{Use cpp titre model}
+\item{type}{Can be "r" or "odin"}
 }
 \value{
 Vector of antibody tires for 1:timesteps

@@ -12,43 +12,6 @@ test_that("antibody models work", {
   t <- 5 * 365
 
   # Single dose
-  abr <- ab_r(1:t, td[1], init_titres[1], prop_short[1], dur_short[1], dur_long[1])
-  abc <- ab_cpp(1:t, td[1], init_titres[1], prop_short[1], dur_short[1], dur_long[1])
-  expect_identical(abc, abc)
-  expect_true(all(abr > 0))
-  expect_true(all(abc > 0))
-
-  # Multiple doses
-  abr <- ab_r(1:t, td, init_titres, prop_short, dur_short, dur_long)
-  abc <- ab_cpp(1:t, td, init_titres, prop_short, dur_short, dur_long)
-  expect_identical(abr, abc)
-  expect_true(all(abr > 0))
-  expect_true(all(abc > 0))
-
-  # Drop in titre
-  init_titres[2] <- 1
-  abr <- ab_r(1:t, td, init_titres, prop_short, dur_short, dur_long)
-  abc <- ab_cpp(1:t, td, init_titres, prop_short, dur_short, dur_long)
-  expect_identical(abc, abc)
-  expect_true(all(abr > 0))
-  expect_true(all(abc > 0))
-})
-
-
-test_that("antibody model wrapper works", {
-  # Time of doses (assuming fist is dose 3 of primary series)
-  td <- c(1, 365, 365 * 2)
-  # Peaks following primary series or boost
-  init_titres <- c(100, 80, 90)
-  # Proportion short-lived
-  prop_short <- c(1, 0.5, 0.6)
-  # Decay short
-  dur_short <- c(60, 60, 60)
-  # Decay long
-  dur_long <- c(300, 300, 300)
-  t <- 5 * 365
-
-  # Single dose
   abr <- ab(t, td[1], init_titres[1], prop_short[1], dur_short[1], dur_long[1], type = "r")
   abc <- ab(t, td[1], init_titres[1], prop_short[1], dur_short[1], dur_long[1], type = "odin")
   expect_equal(abr, abc)

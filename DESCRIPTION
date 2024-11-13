@@ -22,5 +22,9 @@ RoxygenNote: 7.3.2
 Suggests: 
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
-Imports: dust2
+Remotes: 
+    mrc-ide/odin2
+Imports: 
+    dust2,
+    odin2
 LinkingTo: cpp11, dust2, monty
